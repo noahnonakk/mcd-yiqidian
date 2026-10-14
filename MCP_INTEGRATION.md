@@ -1,5 +1,8 @@
 # MCP 集成说明（MCP_INTEGRATION.md）
 
+> 工具名与接入方式以官方仓库 [M-China/mcd-mcp-server](https://github.com/M-China/mcd-mcp-server) 为准（当前 v1.0.9，提供 30+ 工具）。
+> 接入地址 `https://mcp.mcd.cn`，协议 **Streamable HTTP**，鉴权 `Authorization: Bearer <Token>`，限流 600 次/分钟/Token。
+
 本文件说明「一起点」实际使用的麦当劳 MCP Server、Tool、调用流程与业务价值。
 
 ## 使用的麦当劳 MCP 工具
