@@ -3,136 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一起点 · 交互原型（AI 面板风）</title>
+<title>一起点 · 交互原型（麦当劳小程序风格）</title>
 <style>
-  /* ============ AI 面板风 · 色板（唯一来源） ============ */
+  /* ============ 麦当劳小程序风格 · 色板 ============ */
   :root{
-    --bg:#141416; --panel:#1B1B1E; --card:#2A2A2E; --btn:#232327;
-    --tx:#F2F1EC; --tx2:#9A9AA0; --tx3:#8E8E96;
-    --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.16);
-    --c1:#3ED6C8; --c2:#F2C43D; --c3:#F0512B; --c4:#4C8DFF;
-    --green:#43D07A; --blue:#4C8DFF; --orange:#F0512B;
+    --bg:#F5F5F5;            /* 页面浅灰底 */
+    --surface:#FFFFFF;       /* 卡片白 */
+    --surface-2:#FFFBF0;     /* 淡黄衬底 */
+    --surface-3:#FFF5F5;     /* 淡红衬底 */
+    --tx:#1A1A1A;            /* 主文字 */
+    --tx2:#666666;           /* 次要文字 */
+    --tx3:#999999;           /* 辅助文字 */
+    --line:#F0F0F0;          /* 细线 */
+    --shadow:0 8px 24px rgba(0,0,0,.06);
+    --mc-yellow:#FFC300;     /* 麦当劳黄 */
+    --mc-yellow-2:#FFE066;   /* 浅黄 */
+    --mc-red:#DA291C;        /* 麦当劳红 */
+    --mc-red-2:#FF5A4D;      /* 浅红 */
+    --mc-orange:#FF9500;     /* 橙 */
+    --mc-green:#34C759;      /* 成功绿 */
+    --radius:24px;
+    --radius-sm:14px;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{
     min-height:100%;
-    font-family:"Microsoft YaHei","Segoe UI",sans-serif;
-    background:radial-gradient(120% 80% at 50% 18%, #34343A 0%, #232327 42%, #141416 100%);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);
     color:var(--tx); -webkit-font-smoothing:antialiased;
     display:flex; align-items:center; justify-content:center;
     padding:40px 16px;
   }
   /* 页面外说明 */
   .lead{max-width:520px; margin:0 auto 26px; text-align:center;}
-  .lead h1{font-size:22px;font-weight:700;letter-spacing:.5px;}
+  .lead h1{font-size:24px;font-weight:700;letter-spacing:.3px;}
   .lead p{font-size:13px;color:var(--tx2);margin-top:8px;line-height:1.6;}
   .wrap{display:flex;flex-direction:column;align-items:center;gap:22px;}
 
-  /* ============ 手机外壳（圆角 64px） ============ */
+  /* ============ 手机外壳 ============ */
   .phone{
-    width:400px; height:860px; border-radius:64px;
-    background:radial-gradient(120% 80% at 50% 18%, #34343A 0%, #232327 42%, #141416 100%);
-    border:1px solid var(--line2);
-    box-shadow:0 40px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
-    padding:14px; position:relative; flex:0 0 auto;
+    width:400px; height:860px; border-radius:52px;
+    background:var(--surface);
+    border:8px solid #E8E8E8;
+    box-shadow:0 30px 70px rgba(0,0,0,.12);
+    padding:12px; position:relative; flex:0 0 auto;
   }
   .notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);
-    width:120px;height:26px;border-radius:13px;background:#000;opacity:.55;z-index:5;}
+    width:110px;height:28px;border-radius:14px;background:#E8E8E8;z-index:5;}
   /* ============ 屏幕 ============ */
   .screen{
-    width:100%; height:100%; border-radius:50px; background:var(--bg);
-    border:1px solid var(--line);
+    width:100%; height:100%; border-radius:40px; background:var(--bg);
     overflow:hidden; position:relative; display:flex; flex-direction:column;
   }
   /* 顶栏 */
   .topbar{
-    height:62px; flex:0 0 62px; display:flex; align-items:center; gap:14px;
-    padding:0 18px; border-bottom:1px solid rgba(255,255,255,.07);
+    height:60px; flex:0 0 60px; display:flex; align-items:center; gap:12px;
+    padding:0 18px; background:var(--surface);
   }
   .iconbtn{
-    width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.06);
-    display:flex;align-items:center;justify-content:center;flex:0 0 38px;
+    width:36px;height:36px;border-radius:50%;background:#F7F7F7;
+    display:flex;align-items:center;justify-content:center;flex:0 0 36px;
   }
   .iconbtn svg{width:18px;height:18px;stroke:var(--tx);fill:none;stroke-width:2.2;}
-  .ttl{font-size:18px;font-weight:600;flex:1;letter-spacing:.5px;}
-  .ttl small{font-size:11px;color:var(--tx3);font-weight:400;margin-left:6px;}
-  .dots{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;width:20px;flex:0 0 20px;}
-  .dots i{width:8px;height:8px;border-radius:50%;display:block;}
-  .c1{background:var(--c1)}.c2{background:var(--c2)}.c3{background:var(--c3)}.c4{background:var(--c4)}
+  .ttl{font-size:18px;font-weight:700;flex:1;}
+  .ttl small{font-size:12px;color:var(--tx3);font-weight:400;margin-left:6px;}
+  .brand-pill{
+    height:26px;border-radius:13px;background:var(--mc-yellow);
+    padding:0 10px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--tx);
+  }
+  .brand-pill i{width:8px;height:8px;border-radius:50%;background:var(--mc-red);}
 
   /* 主体 */
-  .body{flex:1;padding:20px 18px;display:flex;flex-direction:column;
-    justify-content:space-evenly;gap:14px;overflow:hidden;}
-  .sub2{font-size:12px;color:var(--tx2);text-align:center;line-height:1.5;}
+  .body{flex:1;padding:18px;display:flex;flex-direction:column;
+    gap:14px;overflow:hidden;}
+  .sub2{font-size:13px;color:var(--tx2);text-align:center;line-height:1.5;}
 
   /* 二维码 */
-  .qr{width:190px;height:190px;margin:0 auto;background:var(--tx);border-radius:18px;
-    padding:14px;display:grid;grid-template-columns:repeat(21,1fr);grid-template-rows:repeat(21,1fr);}
-  .qr i{background:#141416;border-radius:1px;}
+  .qr-card{
+    background:var(--surface);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;
+  }
+  .qr{width:180px;height:180px;background:var(--tx);border-radius:14px;padding:12px;
+    display:grid;grid-template-columns:repeat(21,1fr);grid-template-rows:repeat(21,1fr);}
+  .qr i{background:var(--surface);border-radius:1px;}
   .qr i.o{background:transparent;}
+  .qr-tip{font-size:12px;color:var(--tx2);text-align:center;}
 
   /* 头像 */
-  .av{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.07);
-    position:relative;flex:0 0 46px;}
-  .av .h{width:18px;height:18px;border-radius:50%;background:#82828A;position:absolute;top:9px;left:50%;transform:translateX(-50%);}
-  .av .t{width:28px;height:14px;border-radius:8px 8px 5px 5px;background:#82828A;position:absolute;bottom:8px;left:50%;transform:translateX(-50%);}
-  .av.online::after{content:"";position:absolute;top:-3px;right:-3px;width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid var(--bg);}
-  .friends{display:flex;align-items:center;justify-content:center;gap:10px;flex:0 0 auto;}
-  .friends .name{font-size:13px;color:var(--tx2);margin-left:4px;}
+  .av{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--mc-yellow-2);
+    position:relative;flex:0 0 42px;display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:700;color:var(--mc-red);
+  }
+  .av.online::after{content:"";position:absolute;top:-2px;right:-2px;width:12px;height:12px;border-radius:50%;background:var(--mc-green);border:2px solid var(--surface);}
+  .friends{display:flex;align-items:center;justify-content:center;gap:10px;flex:0 0 auto;background:var(--surface);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);}
+  .friends .name{font-size:14px;color:var(--tx);font-weight:500;}
 
   /* 卡片（朋友洞察） */
-  .fcard{background:var(--card);border-radius:24px;padding:16px;border:1px solid var(--line);}
+  .fcard{background:var(--surface);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
   .fcard .hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .fcard .hd .nm{font-size:16px;font-weight:600;flex:1;}
-  .tag{font-size:10px;padding:3px 9px;border-radius:12px;background:rgba(255,255,255,.06);color:var(--tx2);}
-  .ft{display:flex;flex-direction:column;gap:9px;}
+  .fcard .hd .nm{font-size:16px;font-weight:700;flex:1;}
+  .tag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--surface-2);color:var(--tx2);font-weight:500;}
+  .tag.red{background:var(--surface-3);color:var(--mc-red);}
+  .ft{display:flex;flex-direction:column;gap:10px;}
   .ft .row{display:flex;align-items:flex-start;gap:8px;}
-  .ft .k{font-size:11px;color:var(--tx3);flex:0 0 42px;padding-top:2px;}
-  .ft .v{font-size:13px;color:var(--tx);line-height:1.4;flex:1;}
-  .ft .v b{color:var(--green);font-weight:600;}
-  .ft .v .no{color:var(--orange);}
+  .ft .k{font-size:12px;color:var(--tx3);flex:0 0 42px;padding-top:2px;}
+  .ft .v{font-size:14px;color:var(--tx);line-height:1.4;flex:1;}
+  .ft .v b{color:var(--mc-red);font-weight:700;}
+  .ft .v .no{color:var(--mc-orange);font-weight:500;}
 
   /* 券卡 */
-  .coupon{background:var(--card);border-radius:24px;padding:18px;border:1px solid var(--line);
-    display:flex;align-items:center;gap:14px;flex:0 0 auto;}
-  .coupon .amt{font-size:30px;font-weight:700;color:var(--c2);flex:0 0 auto;line-height:1;}
-  .coupon .amt small{font-size:13px;font-weight:400;color:var(--tx2);}
+  .coupon{background:linear-gradient(135deg,#FFF9E6 0%,#FFF 100%);border-radius:var(--radius);padding:18px;
+    box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;flex:0 0 auto;
+    border:1px solid rgba(255,195,0,.25);
+  }
+  .coupon .amt{font-size:32px;font-weight:800;color:var(--mc-red);flex:0 0 auto;line-height:1;}
+  .coupon .amt small{font-size:13px;font-weight:500;color:var(--tx2);}
   .coupon .meta{flex:1;}
-  .coupon .meta .t1{font-size:14px;font-weight:600;}
-  .coupon .meta .t2{font-size:11px;color:var(--tx3);margin-top:3px;}
+  .coupon .meta .t1{font-size:15px;font-weight:700;}
+  .coupon .meta .t2{font-size:12px;color:var(--tx3);margin-top:3px;}
 
   /* 按钮 */
-  .btn{height:50px;border-radius:25px;display:flex;align-items:center;justify-content:center;
-    font-size:15px;font-weight:600;gap:8px;flex:0 0 auto;cursor:pointer;border:none;
-    background:var(--btn);color:var(--tx);border:1px solid var(--line);transition:.15s;}
-  .btn.green{background:var(--green);color:#0c1a10;}
-  .btn.blue{background:var(--blue);color:#0a1430;}
+  .btn{height:48px;border-radius:24px;display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:700;gap:6px;flex:0 0 auto;cursor:pointer;border:none;
+    background:var(--surface);color:var(--tx);box-shadow:var(--shadow);transition:.15s;}
+  .btn.primary{background:var(--mc-yellow);color:var(--tx);}
+  .btn.red{background:var(--mc-red);color:#fff;}
   .btn:active{transform:scale(.97);}
   .btn svg{width:16px;height:16px;}
 
   /* 结果/提示卡 */
-  .res{display:none;border-radius:18px;padding:13px 15px;font-size:13px;line-height:1.5;flex:0 0 auto;}
+  .res{display:none;border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;line-height:1.5;flex:0 0 auto;}
   .res.show{display:block;animation:pop .25s ease;}
-  .res.ok{background:rgba(67,208,122,.12);border:1px solid rgba(67,208,122,.35);color:#bff5d4;}
-  .res.bad{background:rgba(240,81,43,.12);border:1px solid rgba(240,81,43,.35);color:#ffc9b8;}
+  .res.ok{background:#EDFFF4;border:1px solid rgba(52,199,89,.25);color:#0A5C25;}
+  .res.bad{background:#FFF2F0;border:1px solid rgba(218,41,28,.25);color:#8B1A10;}
   @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
   /* 用券演示选项 */
   .pick{display:flex;gap:10px;flex:0 0 auto;}
-  .pick .opt{flex:1;height:42px;border-radius:21px;background:var(--btn);border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tx2);cursor:pointer;}
+  .pick .opt{flex:1;height:44px;border-radius:22px;background:var(--surface);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--tx);font-weight:500;cursor:pointer;box-shadow:var(--shadow);}
   .pick .opt:active{transform:scale(.97);}
 
   /* 气泡（被抢通知） */
-  .bubble{align-self:flex-start;max-width:92%;background:#E8E8EA;color:#141416;
-    border-radius:18px 18px 18px 6px;padding:10px 14px;font-size:13px;font-weight:600;
+  .bubble{align-self:flex-start;max-width:92%;background:var(--tx);color:var(--surface);
+    border-radius:18px 18px 18px 6px;padding:11px 14px;font-size:13px;font-weight:600;
     line-height:1.4;display:none;flex:0 0 auto;}
   .bubble.show{display:block;animation:pop .25s ease;}
 
   /* 底部分页指示 */
   .pager{display:flex;align-items:center;justify-content:center;gap:8px;flex:0 0 30px;}
-  .pager i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);}
-  .pager i.on{background:var(--blue);width:18px;border-radius:4px;}
+  .pager i{width:7px;height:7px;border-radius:50%;background:#D9D9D9;}
+  .pager i.on{background:var(--mc-red);width:18px;border-radius:4px;}
 
   .screen-page{display:none;flex:1;flex-direction:column;}
   .screen-page.on{display:flex;}
@@ -142,7 +163,7 @@
   <div class="wrap">
     <div class="lead">
       <h1>一起点 · 交互原型</h1>
-      <p>AI 面板风 · 和朋友扫码一起点麦当劳。点下方按钮切换三屏流程，屏三可点击体验「抢券 + 强制代价」。</p>
+      <p>麦当劳小程序风格 · 和朋友扫码一起点麦当劳。点下方按钮切换三屏流程，屏三可点击体验「抢券 + 强制代价」。</p>
     </div>
 
     <div class="phone">
@@ -154,19 +175,21 @@
           <div class="topbar">
             <div class="iconbtn"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></div>
             <div class="ttl">一起点</div>
-            <div class="dots"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            <div class="brand-pill"><i></i>M</div>
           </div>
           <div class="body">
-            <div class="sub2">扫这个码，叫朋友进同一个点单会话<br>朋友数据当场授权，现采现用</div>
-            <div class="qr" id="qr"></div>
+            <div class="qr-card">
+              <div class="qr" id="qr"></div>
+              <div class="qr-tip">扫这个码，叫朋友进同一个点单会话<br>朋友数据当场授权，现采现用</div>
+            </div>
             <div class="friends">
-              <div class="av online"><span class="h"></span><span class="t"></span></div>
+              <div class="av online">强</div>
               <span class="name">阿强</span>
-              <div class="av online"><span class="h"></span><span class="t"></span></div>
+              <div class="av online">美</div>
               <span class="name">小美</span>
             </div>
             <div class="sub2">2 位朋友已在线 · 会话内可共享洞察与券</div>
-            <button class="btn green" onclick="go(2)">开始点单
+            <button class="btn primary" onclick="go(2)">开始点单
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </div>
@@ -177,11 +200,11 @@
           <div class="topbar">
             <div class="iconbtn" onclick="go(1)"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></div>
             <div class="ttl">朋友洞察 <small>不用挨个问</small></div>
-            <div class="dots"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            <div class="brand-pill"><i></i>M</div>
           </div>
           <div class="body">
             <div class="fcard">
-              <div class="hd"><div class="av"><span class="h"></span><span class="t"></span></div>
+              <div class="hd"><div class="av">强</div>
                 <div class="nm">阿强</div><div class="tag">本月 3 次</div></div>
               <div class="ft">
                 <div class="row"><div class="k">常点</div><div class="v"><b>巨无霸×3</b> · 薯条</div></div>
@@ -190,7 +213,7 @@
               </div>
             </div>
             <div class="fcard">
-              <div class="hd"><div class="av"><span class="h"></span><span class="t"></span></div>
+              <div class="hd"><div class="av">美</div>
                 <div class="nm">小美</div><div class="tag">本月 2 次</div></div>
               <div class="ft">
                 <div class="row"><div class="k">常点</div><div class="v"><b>板烧鸡腿堡×2</b></div></div>
@@ -199,7 +222,7 @@
               </div>
             </div>
             <div class="res ok show">已自动推荐——拼单时不用再问“你吃啥”。</div>
-            <button class="btn blue" onclick="go(3)">去抢券
+            <button class="btn red" onclick="go(3)">去抢券
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </div>
@@ -210,17 +233,17 @@
           <div class="topbar">
             <div class="iconbtn" onclick="go(2)"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></div>
             <div class="ttl">抢券 <small>只限本会话</small></div>
-            <div class="dots"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            <div class="brand-pill"><i></i>M</div>
           </div>
           <div class="body">
             <div class="coupon">
               <div class="amt">¥10<small> /满30</small></div>
               <div class="meta"><div class="t1">阿强的「满30减10」</div>
                 <div class="t2">他很少用 · 会话内可抢</div></div>
-              <button class="btn green" style="flex:0 0 64px;height:38px;font-size:13px" onclick="grab()">抢这张</button>
+              <button class="btn red" style="flex:0 0 64px;height:38px;font-size:13px" onclick="grab()">抢这张</button>
             </div>
             <div class="res ok" id="grabRes"></div>
-            <div class="sub2" id="hint" style="display:none">用券时有个代价——只能点<b style="color:var(--green)">阿强爱吃的</b>给自己：</div>
+            <div class="sub2" id="hint" style="display:none">用券时有个代价——只能点<b style="color:var(--mc-red)">阿强爱吃的</b>给自己：</div>
             <div class="pick" id="pick" style="display:none">
               <div class="opt" onclick="use('麦辣鸡腿堡')">麦辣鸡腿堡</div>
               <div class="opt" onclick="use('巨无霸')">巨无霸</div>
