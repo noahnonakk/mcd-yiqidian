@@ -1,0 +1,13 @@
+# 真实凭证 / 密钥
+.env
+*.env
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 日志
+*.log
+
+# 本地私有配置（不要提交真实 Token）
+mcp-config.local.json
