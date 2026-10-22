@@ -18,9 +18,10 @@
 
 ### 宣传视频（30 秒）
 
-<video src="promo/yiqidian-30s-b-v3.mp4" controls width="320"></video>
 
-> 仓库内视频，GitHub 网页可直接播放；本地双击 `promo/yiqidian-30s-b-v3.mp4` 也能看。
+
+https://github.com/user-attachments/assets/0fdc9453-2797-4894-9e87-21c0fe7429e3
+
 
 ---
 
