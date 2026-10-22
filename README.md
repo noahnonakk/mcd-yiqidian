@@ -9,15 +9,18 @@
 
 ---
 
-## 看一眼（交互原型）
+## 展示
 
-仓库里有一份可交互的手机原型，按**麦当劳小程序风格**设计（浅底、暖黄/红主色、圆角白卡），本地浏览器打开即可体验三屏流程与"抢券 + 强制代价"：
+- **主展示页（柔光质感）**：`index.html` —— 浏览器打开看产品全貌与动效（麦当劳柔光风格）
+- **交互原型（小程序风格）**：`preview/index.html` —— 手机三屏流程 + 抢券演示，可点击体验
 
-```
-preview/index.html
-```
+（在文件管理器双击对应文件，或 `start index.html` / `start preview/index.html`）
 
-（在文件管理器双击，或 `open preview/index.html` / `start preview/index.html`）
+### 宣传视频（30 秒）
+
+<video src="promo/yiqidian-30s-b-v3.mp4" controls width="320"></video>
+
+> 仓库内视频，GitHub 网页可直接播放；本地双击 `promo/yiqidian-30s-b-v3.mp4` 也能看。
 
 ---
 
@@ -109,11 +112,14 @@ python src/mcd_mcp_client.py order-list
 ```
 mcd-yiqidian/
 ├── README.md                  # 本文件
+├── index.html                 # 主展示页（柔光质感 · 产品全貌与动效）
 ├── CONTEST_DECLARATION.md     # 参赛声明（官方模板，内容不可改）
 ├── MCP_INTEGRATION.md         # 麦当劳 MCP 工具调用说明
 ├── mcp-config.example.json    # 脱敏 MCP 配置（仅占位符）
 ├── SKILL.md                   # WorkBuddy Skill 定义
 ├── preview/index.html         # 交互原型（手机三屏 + 抢券演示）
+├── promo/
+│   └── yiqidian-30s-b-v3.mp4  # 30 秒宣传视频
 ├── src/
 │   ├── together_order.py      # 核心逻辑 + 可运行 mock 演示
 │   └── mcd_mcp_client.py      # 最小 Streamable HTTP 直连客户端示例
